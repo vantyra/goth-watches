@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Vantyra — Custom Watches"
+description = "A dark editorial landing page for Vantyra, a made-to-order custom watch studio. Showcases recent builds, the ordering process, configuration options, payment methods, testimonials, policies, and a Clapper call to action."
+version = "1.0.0"
+id = "artifacts/vantyra-watches"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19365
+
+[services.development]
+run = "pnpm --filter @workspace/vantyra-watches run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vantyra-watches", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vantyra-watches/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19365"
+BASE_PATH = "/"
